@@ -2,7 +2,7 @@
 
 [![GitHub](https://img.shields.io/badge/GitHub-GH0STH4CKER-blue?logo=github)](https://github.com/GH0STH4CKER/cloudflare-detector)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.6+](https://img.shields.io/badge/Python-3.6+-blue?logo=python)](https://www.python.org/)
+[![Python 3.6+](https://img.shields.io/badge/Python-3.13-blue?logo=python)](https://www.python.org/)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)]()
 
 A simple yet powerful Python script that checks whether a domain or URL is likely using Cloudflare by analyzing multiple detection vectors.
