@@ -16,6 +16,16 @@ A simple yet powerful Python script that checks whether a domain or URL is likel
 - 📊 **Confidence Scoring** - Provides a reliability score based on multiple indicators
 - 🎯 **Detailed Reports** - Beautiful formatted output with evidence breakdown
 
+## ⚡ Quick Start
+
+### 🌐 No Installation? Use Web Version!
+  
+**Don't want to download?** Try the web-based detector right now:
+
+➡️ **[CloudPeek - Instant Cloudflare Detection](https://isitcloudflare.lovable.app/)**
+
+Just paste a domain and get instant results! No installation required.
+
 ## 📋 Requirements
 
 ```bash
