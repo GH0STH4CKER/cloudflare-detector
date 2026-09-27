@@ -1,42 +1,50 @@
-# Cloudflare Detection Tool
+# 🔍 Cloudflare Detection Tool
 
-A simple Python script that checks whether a domain or URL is likely using Cloudflare by analyzing:
+[![GitHub](https://img.shields.io/badge/GitHub-GH0STH4CKER-blue?logo=github)](https://github.com/GH0STH4CKER/cloudflare-detector)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.6+](https://img.shields.io/badge/Python-3.6+-blue?logo=python)](https://www.python.org/)
+[![Status](https://img.shields.io/badge/Status-Active-brightgreen)]()
 
-- DNS A/AAAA/CNAME records
-- Known Cloudflare IP ranges
-- Cloudflare-specific HTTP response headers
-- Server and cookies
-- Socket resolution
+A simple yet powerful Python script that checks whether a domain or URL is likely using Cloudflare by analyzing multiple detection vectors.
 
-## Requirements
+## ✨ Features
 
-Install the required Python packages:
+- 🌐 **DNS Analysis** - Checks A/AAAA/CNAME records against known Cloudflare IP ranges
+- 📡 **HTTP Header Detection** - Scans for Cloudflare-specific response headers
+- 🍪 **Cookie Analysis** - Identifies Cloudflare security cookies
+- 🔌 **Socket Resolution** - Verifies IP addresses against Cloudflare IP blocks
+- 📊 **Confidence Scoring** - Provides a reliability score based on multiple indicators
+- 🎯 **Detailed Reports** - Beautiful formatted output with evidence breakdown
+
+## 📋 Requirements
 
 ```bash
 pip install requests dnspython
 ```
 
-## Usage
+## 🚀 Quick Start
 
-Run the script with a domain or URL:
+### Basic Usage
 
 ```bash
 python cloudflareCheck.py example.com
 ```
 
-or
+### With Full URL
 
 ```bash
 python cloudflareCheck.py https://example.com
 ```
 
-## Example Input
+### Get Help
 
 ```bash
-python cloudflareCheck.py https://www.cloudflare.com
+python cloudflareCheck.py
 ```
 
-## Example Output (Cloudflare Detected)
+## 📸 Example Output
+
+### ✅ Cloudflare Detected (High Confidence)
 
 ```
 ╔════════════════════════════════════════════════════════╗
@@ -79,7 +87,7 @@ Resolved IP: 104.16.123.96
 ╚════════════════════════════════════════════════════════╝
 
 Detection score: 13
-Result : HIGH CONFIDENCE
+Result : HIGH CONFIDENCE ✅
 Status : Cloudflare is very likely being used.
 
 Evidence:
@@ -87,19 +95,9 @@ Evidence:
   • HTTP Server header identifies Cloudflare.
   • Found 2 Cloudflare-specific HTTP header(s).
   • Socket resolution points to a known Cloudflare IP range.
-
-------------------------------------------------------------
-Note: Detection is based on observable indicators.
-A website may use Cloudflare while hiding some indicators.
 ```
 
-## Example Input (Non-Cloudflare)
-
-```bash
-python cloudflareCheck.py https://example.com
-```
-
-## Example Output (Not Detected)
+### ❌ Not Detected
 
 ```
 ╔════════════════════════════════════════════════════════╗
@@ -137,45 +135,145 @@ Resolved IP: 93.184.216.34
 ╚════════════════════════════════════════════════════════╝
 
 Detection score: 0
-Result : NOT DETECTED
+Result : NOT DETECTED ❌
 Status : No strong Cloudflare indicators were found.
-
-------------------------------------------------------------
-Note: Detection is based on observable indicators.
-A website may use Cloudflare while hiding some indicators.
 ```
 
-## How It Works
+## 🔬 How It Works
 
 ### Detection Scoring System
 
-- **DNS IP Match** (+3 points): Domain resolves to Cloudflare IP ranges
-- **DNS CNAME** (+3 points): CNAME record contains "cloudflare" or "cloudflare.net"
-- **Cloudflare Headers** (+2 per header, max +6): CF-Ray, CF-Cache-Status, etc.
-- **Server Header** (+4 points): Server header identifies Cloudflare
-- **Cookies** (+2 points): Cloudflare-specific cookies detected
-- **Socket Resolution** (+3 points): IP resolution matches Cloudflare ranges
+| Indicator | Points | Description |
+|-----------|--------|-------------|
+| 🌐 DNS IP Match | +3 | Domain resolves to Cloudflare IP ranges |
+| 🔗 DNS CNAME | +3 | CNAME contains "cloudflare" or "cloudflare.net" |
+| 📬 Cloudflare Headers | +2 each (max +6) | CF-Ray, CF-Cache-Status, etc. |
+| 🏷️ Server Header | +4 | Server header identifies Cloudflare |
+| 🍪 Cookies | +2 | Cloudflare-specific cookies detected |
+| 🔌 Socket IP | +3 | IP resolution matches Cloudflare ranges |
 
 ### Confidence Levels
 
-| Score | Result | Description |
-|-------|--------|-------------|
-| 7+ | **HIGH CONFIDENCE** | Cloudflare is very likely being used |
-| 4-6 | **MEDIUM CONFIDENCE** | Several Cloudflare indicators detected |
-| 2-3 | **LOW CONFIDENCE** | Some Cloudflare indicators detected |
-| 0-1 | **NOT DETECTED** | No strong Cloudflare indicators found |
+| Score | Result | Badge | Description |
+|-------|--------|-------|-------------|
+| 7+ | **HIGH CONFIDENCE** | ✅ | Cloudflare is very likely being used |
+| 4-6 | **MEDIUM CONFIDENCE** | ⚠️ | Several Cloudflare indicators detected |
+| 2-3 | **LOW CONFIDENCE** | ℹ️ | Some Cloudflare indicators detected |
+| 0-1 | **NOT DETECTED** | ❌ | No strong Cloudflare indicators found |
 
-## Notes
+## 📊 Detection Methods
 
-- This tool uses heuristics and confidence scoring
-- Some websites may use Cloudflare but hide certain indicators
-- Results are best interpreted as a signal, not a guaranteed verdict
-- Detection requires network connectivity to perform DNS and HTTP lookups
+### 1️⃣ DNS Analysis
+- Resolves domain A, AAAA, and CNAME records
+- Compares resolved IPs against known Cloudflare IP ranges
+- Identifies Cloudflare nameserver references
 
-## License
+### 2️⃣ HTTP Header Analysis
+- Checks for Cloudflare-specific response headers:
+  - `CF-Ray` - Request tracking ID
+  - `CF-Cache-Status` - Cache status
+  - `CF-Mitigated` - Security status
+  - And more...
 
-MIT
+### 3️⃣ Cookie Analysis
+- Looks for Cloudflare cookies (`__cf*`, `cf_clearance`)
+- Indicates active Cloudflare protection
 
-## Author
+### 4️⃣ Socket Resolution
+- Performs direct socket lookup
+- Verifies resolved IP against Cloudflare's IPv4 ranges
 
-Created by GH0STH4CKER
+## ⚙️ Installation
+
+### Clone Repository
+```bash
+git clone https://github.com/GH0STH4CKER/cloudflare-detector.git
+cd cloudflare-detector
+```
+
+### Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+Or manually:
+```bash
+pip install requests dnspython
+```
+
+## 🛠️ Advanced Usage
+
+### Check Multiple Domains
+```bash
+for domain in example.com google.com cloudflare.com; do
+    python cloudflareCheck.py $domain
+done
+```
+
+### Save Results to File
+```bash
+python cloudflareCheck.py example.com > results.txt
+```
+
+## ⚠️ Important Notes
+
+- **Heuristic-based**: Detection uses observable indicators and confidence scoring
+- **Not Guaranteed**: Some websites may use Cloudflare while hiding certain indicators
+- **Network Required**: Requires internet connectivity for DNS and HTTP lookups
+- **Rate Limiting**: Don't check too many domains in rapid succession
+- **Privacy**: Only performs DNS, HTTP, and socket lookups; no data collection
+
+## 🔐 Security & Privacy
+
+This tool:
+- ✅ Does NOT store any data about checked domains
+- ✅ Does NOT transmit results anywhere
+- ✅ Only performs standard DNS and HTTP queries
+- ✅ Runs entirely locally on your machine
+- ✅ Can be audited by reading the source code
+
+## 📝 Example Commands
+
+```bash
+# Check cloudflare.com
+python cloudflareCheck.py cloudflare.com
+
+# Check with HTTPS
+python cloudflareCheck.py https://www.cloudflare.com
+
+# Check GitHub
+python cloudflareCheck.py github.com
+
+# Check a subdomain
+python cloudflareCheck.py api.example.com
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+- Report bugs
+- Suggest improvements
+- Submit pull requests
+- Improve documentation
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+## 👤 Author
+
+**GH0STH4CKER**
+- GitHub: [@GH0STH4CKER](https://github.com/GH0STH4CKER)
+
+## ⭐ Show Your Support
+
+If you found this tool helpful, please consider:
+- 🌟 Starring the repository
+- 🔗 Sharing with others
+- 💬 Providing feedback
+- 🐛 Reporting issues
+
+---
+
+**Last Updated**: 2026-09-27  
+**Status**: ✅ Active & Maintained
